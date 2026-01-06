@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Dooley & Chari Wedding</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Great+Vibes&family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
+
+<style>
+/* ================= BASE ================= */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  background-color: #efe4d6;
+}
+
+/* ================= SCREENS ================= */
+.screen {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  transition: opacity 1s ease;
+}
+
+.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ================= ENVELOPE ================= */
+.folder {
+  width: 220px;
+  height: 150px;
+  background: #d8c4a3;
+  border-radius: 8px;
+  position: relative;
+  cursor: pointer;
+  animation: float 2.5s ease-in-out infinite;
+}
+
+.folder::before {
+  content: "";
+  position: absolute;
+  top: -30px;
+  left: 0;
+  width: 100%;
+  height: 40px;
+  background: #c9b08a;
+  border-radius: 8px 8px 0 0;
+  transform-origin: bottom;
+  transition: transform 0.6s ease;
+}
+
+.folder.open::before {
+  transform: rotateX(140deg);
+}
+
+.open-text {
+  margin-top: 20px;
+  font-size: 18px;
+  letter-spacing: 1px;
+  color: #5a4632;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+/* ================= INVITATION ================= */
+.invitation {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, #f2e7da, #d8c2a8, #9b6b3f, #4a2c1d);
+  color: #3b2a1a;
+  position: relative;
+}
+
+.names-section {
+  position: absolute;
+  top: 18%;
+  width: 100%;
+  text-align: center;
+  z-index: 5;
+}
+
+.logo-bg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 90vh;
+  opacity: 0.08;
+}
+
+.logo-bg img {
+  height: 100%;
+}
+
+.names-section h1 {
+  font-family: 'Great Vibes', cursive;
+  font-size: 6rem;
+}
+
+.countdown-wrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.countdown {
+  display: flex;
+  gap: 2rem;
+}
+
+.countdown div {
+  background: rgba(255,255,255,0.25);
+  padding: 1.6rem;
+  border-radius: 22px;
+  min-width: 120px;
+  text-align: center;
+  backdrop-filter: blur(6px);
+}
+
+.countdown span {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.8rem;
+  font-weight: 600;
+}
+
+.countdown label {
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+}
+
+/* ================= FLOWERS ================= */
+.flowers {
+  position: absolute;
+  bottom: -10px;
+  width: 110%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.flower {
+  transform-origin: bottom center;
+  animation: sway 6s ease-in-out infinite;
+}
+
+@keyframes sway {
+  0% { transform: rotate(-3deg); }
+  50% { transform: rotate(3deg); }
+  100% { transform: rotate(-3deg); }
+}
+
+/* ================= MOBILE ================= */
+@media (max-width: 600px) {
+  .names-section h1 { font-size: 3.8rem; }
+  .countdown span { font-size: 2rem; }
+  .countdown div { min-width: 85px; padding: 1.2rem; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- 🎵 MUSIC (GESTURE SAFE) -->
+<audio id="bgMusic" preload="auto" loop playsinline>
+  <source src="SONG/song.mp3" type="audio/mpeg">
+</audio>
+
+<!-- ========== SCREEN 1: ENVELOPE ========== -->
+<div class="screen" id="screen1">
+  <div class="folder" id="folder"></div>
+  <div class="open-text">Please Open</div>
+</div>
+
+<!-- ========== SCREEN 2: INVITATION ========== -->
+<div class="screen hidden" id="screen2">
+  <div class="invitation">
+
+    <div class="names-section">
+      <div class="logo-bg">
+        <img src="logo.png" alt="Logo">
+      </div>
+      <h1>Dooley &amp; Chari</h1>
+    </div>
+
+    <div class="countdown-wrapper">
+      <div class="countdown">
+        <div><span id="days">0</span><label>DAYS</label></div>
+        <div><span id="hours">0</span><label>HOURS</label></div>
+        <div><span id="minutes">0</span><label>MINUTES</label></div>
+        <div><span id="seconds">0</span><label>SECONDS</label></div>
+      </div>
+    </div>
+
+    <div class="flowers">
+      <svg class="flower" width="80" height="200">
+        <line x1="40" y1="200" x2="40" y2="100" stroke="#6b4a2b" stroke-width="3"/>
+        <circle cx="40" cy="90" r="6" fill="#b08968"/>
+      </svg>
+    </div>
+
+  </div>
+</div>
+
+<script>
+const folder = document.getElementById("folder");
+const music = document.getElementById("bgMusic");
+const screen1 = document.getElementById("screen1");
+const screen2 = document.getElementById("screen2");
+
+folder.addEventListener("click", () => {
+  folder.classList.add("open");
+
+  music.currentTime = 0;
+  music.play().catch(e => console.log(e));
+
+  setTimeout(() => {
+    screen1.classList.add("hidden");
+    screen2.classList.remove("hidden");
+  }, 800);
+});
+
+/* COUNTDOWN */
+const targetDate = new Date(Date.UTC(2026, 3, 18, 5, 0, 0));
+function updateCountdown() {
+  const now = new Date();
+  const diff = targetDate - now;
+  if (diff <= 0) return;
+  days.textContent = Math.floor(diff / 86400000);
+  hours.textContent = Math.floor(diff / 3600000 % 24);
+  minutes.textContent = Math.floor(diff / 60000 % 60);
+  seconds.textContent = Math.floor(diff / 1000 % 60);
+}
+setInterval(updateCountdown, 1000);
+updateCountdown();
+</script>
+
+</body>
+</html>
