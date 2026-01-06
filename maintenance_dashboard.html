@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Maintenance Management System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background: #1e3a8a;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .container {
+            display: flex;
+            gap: 20px;
+            padding: 30px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            background: white;
+            width: 300px;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+        }
+
+        .icon {
+            font-size: 60px;
+            margin-bottom: 10px;
+        }
+
+        .card h2 {
+            color: #1e3a8a;
+        }
+
+        .card p {
+            color: #555;
+        }
+
+        footer {
+            text-align: center;
+            padding: 15px;
+            background: #e5e7eb;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Maintenance Management System</h1>
+    <p>Vehicles • Air Conditioning • Equipment</p>
+</header>
+
+<div class="container">
+
+    <!-- VEHICLE MAINTENANCE -->
+    <div class="card" onclick="alert('Vehicle Maintenance Module')">
+        <div class="icon">🚗</div>
+        <h2>Vehicle Maintenance</h2>
+        <p>Track oil change, mileage, repairs, and preventive maintenance.</p>
+    </div>
+
+    <!-- AIRCON MAINTENANCE -->
+    <div class="card" onclick="alert('Air Conditioning Maintenance Module')">
+        <div class="icon">❄️</div>
+        <h2>Air Conditioning Units</h2>
+        <p>Monitor cleaning schedules, inspections, and servicing.</p>
+    </div>
+
+    <!-- EQUIPMENT MAINTENANCE -->
+    <div class="card" onclick="alert('Equipment Maintenance Module')">
+        <div class="icon">🛠️</div>
+        <h2>Other Equipment</h2>
+        <p>Manage tools, generators, machines, and service intervals.</p>
+    </div>
+
+</div>
+
+<footer>
+    © 2025 Maintenance System | Offline HTML Interface
+</footer>
+
+</body>
+</html>
